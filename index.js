@@ -1,14 +1,17 @@
 //const express = require('express')
 import express from 'express';
 import mysql from 'mysql2/promise';
+import cors from "cors";
 import { response } from "./config/response.js";
 import { BaseError } from "./config/error.js";
 import { status } from "./config/response.status.js";
 import { tempRouter } from './routes/tempRoute.js';
 import { returnError } from './controllers/errorController.js';
-
+import { userRouter} from './routes/userRoute.js';
+import { storeRouter } from './routes/storeRoute.js';
 const app = express();
-const port = 3000;
+//const port = 3000;
+app.set("port", process.env.PORT || 3000);
 require("dotenv").config();
 app.use(
 	express.urlencoded({
@@ -16,29 +19,53 @@ app.use(
 	})
 );
 app.use(express.json());
+app.use(cors());
+app.use(express.static("public"));
+
+export const db = mysql.createPool({
+	host:process.env.DB_HOST,
+	user:process.env.DB_USER,
+	password:process.env.DB_PW,
+	port: process.env.DB_PORT,
+	database: process.env.DB_NAME,
+	waitForConnections: true,
+	insecureAuth: true
+});
 app.use("/temp",tempRouter);
+app.use("/user",userRouter);
+app.use("/store", storeRouter);
 app.get('/', (req, res) => {
 	//res.send('Hello World!testing nodemon....')
 	  res.send("testing");	
   });
-  
-// 유효하지 않은 페이지에 접속한 경우우
+app.get('/user/signin', (req,res) => {
+	res.sendFile(__dirname + "/public/signin.html");
+})
+app.get('/store/register', (req,res) => {
+	res.sendFile(__dirname + "/public/registerStore.html");
+});
+// 유효하지 않은 페이지에 접속한 경우
+/*
 app.use((req,res,next) => {
 	const err = new BaseError(status.NOT_FOUND);
 	next(err);
 }
 ) 
 app.use((err,req,res,next)=>{
-	console.log(err.data.status);
-	console.log(err.data.message);
-	res.locals.message = err.message;
-	//NODE.ENV=80
-	//res.locals.error = process.env.NODE_ENV !== "production" ? err: {};
-	//console.log(response(err.data));
-	res.status(err.data.status).send(response(err.data));
-	
-	console.log("done");
+	if(err){
+		console.log(err.data.status);
+		console.log(err.data.message);
+		res.locals.message = err.message;
+		//NODE.ENV=80
+		res.locals.error = process.env.NODE_ENV !== "production" ? err: {};
+		console.log(response(err.data));
+		res.status(err.data.status).send(response(err.data));
+		
+		console.log("done");
+	}
+
 });
+*/
 
 /*
 app.use((req,res,next)=>{
@@ -104,6 +131,6 @@ main();
 
 
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+app.listen(app.get("port"), () => {
+  console.log(`Example app listening on port ${app.get("port")}`);
 });

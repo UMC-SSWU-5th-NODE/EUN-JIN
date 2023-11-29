@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible"  content="IE=edge">
+        <meta name="viewport" content="with=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
+        <style>
+        </style>
+    <body>
+        <form action="/user/signin" method="POST">
+            <label for="name">name</label>
+            <input type="text" id="name" name="name">
+            <label for="email">email</label>
+            <input type="text" id="email" name="email">
+            <label for="gender">gender</label>
+            <input type="text" id="gender" name="gender">
+            <label for="prefer">prefer(이거는 일단 fixed된 값으로 서버 상에서 구동하도록 했음)</label>
+            <input type="text" id="prefer" name="prefer" value="[2,4,5]">
+            <input type="submit" id="submit" name="submit" value ="submit">   
+        </form>
+    </body>
+</html>

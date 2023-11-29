@@ -15,6 +15,9 @@ export const status ={
   //사용자 에러
   MEMBER_NOT_FOUND: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "MEMBER4001", "message": "사용자가 없습니다."},
   NICKNAME_NOT_EXIST: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "MEMBER4002", "message": "닉네임은 필수입니다."},
+  EMAIL_ALREADY_EXIST: {status:StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "MEMBER4003", "message": "해당 이메일이 이미 존재합니다."},
+  PARAMETER_IS_WRONG: {status:StatusCodes.BAD_REQUEST, "isSuccess":false, "code": "MEMBER4004", "message": "잘못된 인자를 입력했습니다"},
+
 
   ARTICLE_NOT_FOUND: {status: StatusCodes.NOT_FOUND, "isSuccess": false, "code": "ARTICLE4001", "message": "게시글이 없습니다."}
 };
