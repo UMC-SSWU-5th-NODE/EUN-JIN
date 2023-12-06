@@ -1,7 +1,7 @@
 import {db} from "../index.js";
 import { BaseError } from "../config/error.js";
 import { status } from "../config/response.status.js";
-import { confirmEmail, insertUsersql, getUserID,addMission} from "./user.sql.js";
+import { confirmEmail, insertUsersql, getUserID,addMission,getReviews,getMissionIngs,setStatus} from "./user.sql.js";
 
 
 export const addUser = async(data) => {
@@ -51,5 +51,28 @@ export const addMemberMission = async(data) => {
 
     const dbConnection = await db.getConnection();
     const result = await db.query(addMission, [data.user_id, data.mission_id, data.review_id, data.status, db.now, db.now]);
+    dbConnection.release();
+    return result;
+}
+export const getReviewLists = async(id) => {
+
+    const dbConnection = await db.getConnection();
+    const result = await db.query(getReviews);
+    console.log(result);
+    dbConnection.release();
+    return result;
+}
+export const getMissionIngfromUser = async(id) => {
+    const dbConnection = await db.getConnection();
+    const result = await db.query(getMissionIngs);
+    console.log(result);
+    dbConnection.release();
+    return result;
+}
+export const setStatusDone = async(id) => {
+    const dbConnection = await db.getConnection();
+    const result = await db.query(setStatus);
+    console.log(result);
+    dbConnection.release();
     return result;
 }

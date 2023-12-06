@@ -2,7 +2,7 @@
 import {BaseError} from "../config/error";
 import { status } from "../config/response.status";
 import {signinResponseDTO} from "../dtos/user.dto.js";
-import {getUser, addUser, addMemberMission} from "../models/user.dao.js";
+import {getUser, addUser, addMemberMission, getReviewLists,getMissionIngfromUser,setStatusDone} from "../models/user.dao.js";
 
 export const joinUser = async(body) => {
     const userData = {
@@ -38,5 +38,20 @@ export const registerMemberMission= async(body) => {
 
     const result = await addMemberMission(missionData);
 
+    return result;
+}
+
+export const getReviewList = async(id) => {
+
+    const result = await getReviewLists(id);
+
+    return result;
+}
+export const getUserMissionIng = async(id) => {
+    const result = await getMissionIngfromUser(id);
+    return result;
+}
+export const completedUserMission = async(id) => {
+    const result = await setStatusDone(id);
     return result;
 }

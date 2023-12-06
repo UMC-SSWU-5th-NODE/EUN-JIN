@@ -1,7 +1,7 @@
 import {db} from "../index.js";
 import { BaseError } from "../config/error.js";
 import { status } from "../config/response.status.js";
-import { insertStore, insertMission } from "./store.sql.js";
+import { insertStore, insertMission,getMissionSQL } from "./store.sql.js";
 
 
 export const addStore = async(data) => {
@@ -24,4 +24,11 @@ export const addMission = async(data) => {
 
     return result[0];
 
+}
+export const getMissions = async(id) => {
+    const dbConnection = await db.getConnection();
+    const result = await db.query(getMissionSQL);
+    console.log(result);
+    dbConnection.release();
+    return result;
 }
